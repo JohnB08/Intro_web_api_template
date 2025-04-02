@@ -22,6 +22,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+/* La oss prøve å legge til en egendefinert Route. Vi kan gjøre dette via å velge hvilken http metode vi vil lytte etter, og velge den korresponderende Map metoden på app.
+I vårt tilfelle la oss prøve å lage en metode som Mapper en request til default access routen vår. */
+app.MapGet("/", ()=>"Hello, gang!");
+/* Vi har nå bedd vår app, om å lytte etter get requests til default routen sin (tenk prefixUrl fra forrige uke). Når den får en get request til den routen, skal den returne teksten Hello, gang! */
+
 /* Dette er middleware for å redirekte http requests til https request, om de korekte sertifikatene er satt opp. */
 app.UseHttpsRedirection();
 /* Her kjører vi applikasjonen vår. Fungerer veldig likt hvordan vi kjørte en webserver i forrige uke.
