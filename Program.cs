@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 /* La oss prøve å legge til en egendefinert Route. Vi kan gjøre dette via å velge hvilken http metode vi vil lytte etter, og velge den korresponderende Map metoden på app.
 I vårt tilfelle la oss prøve å lage en metode som Mapper en request til default access routen vår. */
-app.MapGet("/", ()=>"Hello, gang!");
+app.MapGet("/", ()=> "Hello, gang!");
 /* Vi har nå bedd vår app, om å lytte etter get requests til default routen sin (tenk prefixUrl fra forrige uke). Når den får en get request til den routen, skal den returne teksten Hello, gang! */
 
 /* La oss sette opp modellene fra TaskManager appen vår fra to uker siden. */
