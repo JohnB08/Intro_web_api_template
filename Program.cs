@@ -79,6 +79,18 @@ for eksempel for å kjøre denne applikasjonen via watch bruker vi
 
 dotnet watch run
  */
+
+ /* Legg merke til at når vi starter applikasjonen på denne måten, så åpnes apiet vårt via "swagger test".
+
+ Det er middleware tilgjengeliggjort for oss her:
+ if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+og som lager en testsuite for oss, hvor vi kan teste de forskjellige endepunktene vi tilgjengeliggjør i apiet vårt.
+  */
 /* Dette er middleware for å redirekte http requests til https request, om de korekte sertifikatene er satt opp. */
 app.UseHttpsRedirection();
 /* Her kjører vi applikasjonen vår. Fungerer veldig likt hvordan vi kjørte en webserver i forrige uke.
