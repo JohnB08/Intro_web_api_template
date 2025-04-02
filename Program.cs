@@ -28,6 +28,9 @@ I vårt tilfelle la oss prøve å lage en metode som Mapper en request til defau
 app.MapGet("/", ()=>"Hello, gang!");
 /* Vi har nå bedd vår app, om å lytte etter get requests til default routen sin (tenk prefixUrl fra forrige uke). Når den får en get request til den routen, skal den returne teksten Hello, gang! */
 
+/* La oss sette opp modellene fra TaskManager appen vår fra to uker siden. */
+
+
 /* Dette er middleware for å redirekte http requests til https request, om de korekte sertifikatene er satt opp. */
 app.UseHttpsRedirection();
 /* Her kjører vi applikasjonen vår. Fungerer veldig likt hvordan vi kjørte en webserver i forrige uke.
