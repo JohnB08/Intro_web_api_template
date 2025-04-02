@@ -44,6 +44,9 @@ app.MapGet("/", ()=>"Hello, gang!");
 /* Legg merke til at lytterene nedenfor "lytter" på en tillegsbit til prefixUrlen vår. 
 Det kan være lurt at denne "suffixen" er en god, og berskrivende endepunkt som forklarer tydlig til brukeren vår hva resurs de jobber mot.*/
 
+/* Legg også merke til at vi refererer til en TaskContext som parameter i alle etterfølgende metoder. 
+Det vi gjør her er å hente vår Singleton TaskContext objekt fra dependency containeren vår, og injekter den inn i et endepunkt når den blir callet.  */
+
 /* La oss lage et endepunkt som kan legge til en Task. Legg merke til vi bruker http metoden POST
 som er standardmetoden som referer til at en klient prøver å "poste" en ny resurs til vårt endepunkt. */
 
