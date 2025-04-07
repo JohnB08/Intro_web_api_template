@@ -1,5 +1,6 @@
 /* Her lager vi en referanse til et builder objekt, som kan samle alle konfigurasjonsobjekter samt en ting som heter depencency containeren under en fellesreferanse, slik at vi kan fylle de ut før vi faktisk "bygger" appen vår.
 Måten dette fungerer på er via en designpattern som heter builder prinsippet, hvor du stykker opp constructoren av et objekt i flere byggesteg. */
+using Intro_web_api_template.Interfaces;
 using Intro_web_api_template.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,7 @@ Singleton betyr at det bare skal eksistere en "lifetime" av dette objektet, så 
 Aka hver gang vi refererer til en TaskContext i en metode i appen vår, refererer vi til samme instans av TaskContext.
 
 Vi legger en instans av TaskContext inn i vår Dependency Container.   */
-builder.Services.AddSingleton<TaskContext>();
+builder.Services.AddSingleton<ITaskContext, TaskContext>();
 
 var app = builder.Build();
 
@@ -50,28 +51,28 @@ Det vi gjør her er å hente vår Singleton TaskContext objekt fra dependency co
 /* La oss lage et endepunkt som kan legge til en Task. Legg merke til vi bruker http metoden POST
 som er standardmetoden som referer til at en klient prøver å "poste" en ny resurs til vårt endepunkt. */
 
-app.MapPost("/taskmanager", (string title, string description, DateTime dueDate, TaskContext context ) => context.AddTask(title, description, dueDate));
+app.MapPost("/taskmanager", (string title, string description, DateTime dueDate, ITaskContext context ) => context.AddTask(title, description, dueDate));
 
 /* La oss lage et endepunkt som kan gette alle tasks. */
 
-app.MapGet("/taskmanager", (TaskContext context) => context.GetAllTasks());
+app.MapGet("/taskmanager", (ITaskContext context) => context.GetAllTasks());
 
 /* Vi lager endepunkter for å hente pending og complete */
 
-app.MapGet("/taskmanager/complete", (TaskContext context) => context.GetCompleteTasks());
+app.MapGet("/taskmanager/complete", (ITaskContext context) => context.GetCompleteTasks());
 
-app.MapGet("/taskmanager/pending", (TaskContext context) => context.GetPendingTasks());
+app.MapGet("/taskmanager/pending", (ITaskContext context) => context.GetPendingTasks());
 
 /* Vi kan lage endepunkter som kan fetche enkelt tasks */
 /* Legg merke til at vi kan hente ut id fra route via {id}, husk tilbake til hvordan rawurl kunne brukes til å lese routen vår bak prefixUrlen vår.  */
-app.MapGet("/taskmanager/{id}", (int id, TaskContext context) => context.GetTaskById(id));
+app.MapGet("/taskmanager/{id}", (int id, ITaskContext context) => context.GetTaskById(id));
 
 
 /* Hvis en klient ønsker å endre en resurs vi tilgjengeliggjør, bruker de gjerne metoden Patch. Siden vi her ønsker å complete en task via en id, kan vi appende en {id} til vår taskmanager/complete route. */
-app.MapPatch("/taskmanager/complete/{id}", (int id, TaskContext context) => context.CompleteTask(id));
+app.MapPatch("/taskmanager/complete/{id}", (int id, ITaskContext context) => context.CompleteTask(id));
 
 /* Det samme hvis vi skal slette en resurs, når en klient ønsker å slette en resurs vi tilgjengeliggjør, så bruker de gjerne http metoden DELETE */
-app.MapDelete("/taskmanager/{id}", (int id, TaskContext context) => context.DeleteTask(id));
+app.MapDelete("/taskmanager/{id}", (int id, ITaskContext context) => context.DeleteTask(id));
 
 
 /* For å teste appen vår på dette tidspunktet kan det være greit å bruke run daemonen tilgjengelig for oss i dotnet dev tools.
